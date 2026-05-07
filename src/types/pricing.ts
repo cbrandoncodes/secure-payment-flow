@@ -1,8 +1,12 @@
+export type BillingInterval = "monthly" | "annually";
+
 export type PricingPlan = {
   id: string;
   name: string;
-  price: number;
-  interval: "month";
+  prices: {
+    monthly: number;
+    annually: number;
+  };
   description: string;
   features: string[];
   highlighted?: boolean;

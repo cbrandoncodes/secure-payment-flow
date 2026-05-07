@@ -1,8 +1,16 @@
-import { PricingCard } from "@/components/pricing-card";
+"use client";
+
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { PricingCard } from "@/components/pricing-card";
 import { PRICING_PLANS } from "@/lib/pricing";
+import type { BillingInterval } from "@/types/pricing";
 
 export default function HomePage() {
+  const [billingInterval, setBillingInterval] =
+    useState<BillingInterval>("monthly");
+
   return (
     <main className="flex-1">
       <section className="mx-auto max-w-5xl px-4 py-20 text-center">
@@ -35,12 +43,23 @@ export default function HomePage() {
           <p className="mt-2 text-muted-foreground">
             Choose the plan that works for you.
           </p>
+          <Tabs
+            value={billingInterval}
+            onValueChange={(v) => setBillingInterval(v as BillingInterval)}
+            className="mt-6 items-center"
+          >
+            <TabsList variant="pill">
+              <TabsTrigger value="monthly">Monthly</TabsTrigger>
+              <TabsTrigger value="annually">Annually</TabsTrigger>
+            </TabsList>
+          </Tabs>
         </div>
         <div className="grid gap-6 sm:grid-cols-3">
           {PRICING_PLANS.map((plan) => (
             <PricingCard
               key={plan.id}
               plan={plan}
+              billingInterval={billingInterval}
               isCurrentPlan={plan.id === "free"}
             />
           ))}
