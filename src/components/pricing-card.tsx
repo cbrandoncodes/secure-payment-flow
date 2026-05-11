@@ -7,10 +7,12 @@ export function PricingCard({
   plan,
   billingInterval,
   isCurrentPlan,
+  onAction,
 }: {
   plan: PricingPlan;
   billingInterval: BillingInterval;
   isCurrentPlan?: boolean;
+  onAction?: () => void;
 }) {
   const price = plan.prices[billingInterval];
   const savingsPct =
@@ -124,6 +126,7 @@ export function PricingCard({
         variant={plan.highlighted ? "secondary" : "outline"}
         className="w-full"
         disabled={isCurrentPlan}
+        onClick={onAction}
       >
         {isCurrentPlan
           ? "Current plan"
